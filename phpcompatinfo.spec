@@ -2,7 +2,7 @@
 # http://opensource.org/licenses/MIT
 
 Name: phpcompatinfo
-Version: 5.2.0
+Version: 5.2.1
 Release: 1%{?dist}
 Summary: Find the minimum version and the extensions required for a piece of PHP code to run
 
@@ -37,6 +37,9 @@ and the extensions required for a piece of code to run.
 %{_bindir}/%{name}
 
 %changelog
+* Thu Nov 07 2019 Danila Vershinin <info@getpagespeed.com> 5.2.1-1
+- upstream version auto-updated to 5.2.1
+
 * Sun Jun 02 2019 Danila Vershinin <info@getpagespeed.com> 5.2.0-1
 - upstream version auto-updated to 5.2.0
 
