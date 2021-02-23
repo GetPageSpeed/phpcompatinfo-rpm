@@ -2,7 +2,7 @@
 # http://opensource.org/licenses/MIT
 
 Name: phpcompatinfo
-Version: 5.4.3
+Version: 5.4.4
 Release: 1%{?dist}
 Summary: Find the minimum version and the extensions required for a piece of PHP code to run
 
@@ -37,6 +37,9 @@ and the extensions required for a piece of code to run.
 %{_bindir}/%{name}
 
 %changelog
+* Tue Feb 23 2021 Danila Vershinin <info@getpagespeed.com> 5.4.4-1
+- release 5.4.4
+
 * Sat Feb 13 2021 Danila Vershinin <info@getpagespeed.com> 5.4.3-1
 - release 5.4.3
 
