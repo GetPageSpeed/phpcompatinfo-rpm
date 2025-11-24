@@ -7,8 +7,8 @@ Release: 1%{?dist}
 Summary: Find the minimum version and the extensions required for a piece of PHP code to run
 
 License: BSD-3-clauses License
-URL: http://php5.laurent-laville.org/compatinfo/
-Source0: http://bartlett.laurent-laville.org/get/phpcompatinfo-%{version}.phar
+URL: https://github.com/llaville/php-compatinfo
+Source0: https://github.com/llaville/php-compatinfo/releases/download/%{version}/phpcompatinfo.phar
 
 BuildArch: noarch
 
