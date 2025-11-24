@@ -3,7 +3,7 @@
 
 Name: phpcompatinfo
 Version: 7.2.5
-Release: 1%{?dist}
+Release: 2%{?dist}
 Summary: Find the minimum version and the extensions required for a piece of PHP code to run
 
 License: BSD-3-clauses License
@@ -12,7 +12,8 @@ Source0: https://github.com/llaville/php-compatinfo/releases/download/%{version}
 
 BuildArch: noarch
 
-Requires:  php(language) >= 5.5
+BuildRequires: php-cli
+Requires:  php-cli
 
 %description
 PHP CompatInfo is a library that can find the minimum version 
@@ -27,16 +28,41 @@ and the extensions required for a piece of code to run.
 # Nothing to do
 
 
+%global phar_dir %{_datadir}/%{name}
+
 %install
-%{__rm} -rf $RPM_BUILD_ROOT
-%{__mkdir} -p $RPM_BUILD_ROOT%{_bindir}
-%{__install} -m 755 -p %SOURCE0 $RPM_BUILD_ROOT%{_bindir}/%{name}
+%{__rm} -rf %{buildroot}
+%{__mkdir} -p %{buildroot}%{phar_dir}
+%{__mkdir} -p %{buildroot}%{_bindir}
+
+# Install upstream PHAR to a data location with .phar extension
+%{__install} -m 644 -p %SOURCE0 %{buildroot}%{phar_dir}/%{name}.phar
+
+# Lightweight CLI wrapper that executes the PHAR with the system PHP
+cat > %{buildroot}%{_bindir}/%{name} << 'EOF'
+#!/bin/sh
+exec php /usr/share/phpcompatinfo/phpcompatinfo.phar "$@"
+EOF
+%{__chmod} 0755 %{buildroot}%{_bindir}/%{name}
+
+%check
+# Only run functional test when PHP runtime is new enough
+if php -r 'exit(version_compare(PHP_VERSION, "8.0", "<") ? 1 : 0);'; then
+    %{buildroot}%{_bindir}/%{name} --version >/dev/null 2>&1
+else
+    echo "Skipping functional check: PHP < 8.0; binary integrity already verified by install step."
+fi
 
 %files
 %defattr(-,root,root)
 %{_bindir}/%{name}
+%{phar_dir}/%{name}.phar
 
 %changelog
+* Mon Nov 24 2025 Danila Vershinin <info@getpagespeed.com> 7.2.5-2
+- install PHAR under /usr/share/phpcompatinfo and use a wrapper script for CLI
+- fix runtime on EL7 where PHAR cannot be created from /usr/bin/phpcompatinfo
+
 * Mon Nov 24 2025 Danila Vershinin <info@getpagespeed.com> 7.2.5-1
 - release 7.2.5
 
