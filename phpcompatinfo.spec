@@ -41,7 +41,8 @@ and the extensions required for a piece of code to run.
 # Lightweight CLI wrapper that executes the PHAR with the system PHP
 cat > %{buildroot}%{_bindir}/%{name} << 'EOF'
 #!/bin/sh
-exec php /usr/share/phpcompatinfo/phpcompatinfo.phar "$@"
+PHAR_DIR="$(cd "$(dirname "$0")/../share/phpcompatinfo" && pwd)"
+exec php "${PHAR_DIR}/phpcompatinfo.phar" "$@"
 EOF
 %{__chmod} 0755 %{buildroot}%{_bindir}/%{name}
 
