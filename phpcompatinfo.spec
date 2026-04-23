@@ -2,8 +2,8 @@
 # http://opensource.org/licenses/MIT
 
 Name: phpcompatinfo
-Version: 7.2.5
-Release: 2%{?dist}
+Version: 7.2.6
+Release: 1%{?dist}
 Summary: Find the minimum version and the extensions required for a piece of PHP code to run
 
 License: BSD-3-clauses License
@@ -60,6 +60,9 @@ fi
 %{phar_dir}/%{name}.phar
 
 %changelog
+* Thu Apr 23 2026 Danila Vershinin <info@getpagespeed.com> 7.2.6-1
+- release 7.2.6
+
 * Mon Nov 24 2025 Danila Vershinin <info@getpagespeed.com> 7.2.5-2
 - install PHAR under /usr/share/phpcompatinfo and use a wrapper script for CLI
 - fix runtime on EL7 where PHAR cannot be created from /usr/bin/phpcompatinfo
