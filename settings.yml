@@ -1,0 +1,8 @@
+---
+# SUSE splits every PHP extension into its own package, so the upstream phar
+# (which needs at least pdo, phar, iconv, tokenizer, mbstring, dom, ctype,
+# openssl, fileinfo) would need a SUSE-only dependency list that no other
+# distro requires - php-common carries all of them on EL/Fedora/amzn.
+# Not worth carrying for one lane; sles is excluded instead.
+exclude:
+  - sles*
