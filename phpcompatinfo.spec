@@ -3,7 +3,7 @@
 
 Name: phpcompatinfo
 Version: 7.2.6
-Release: 1%{?dist}
+Release: 2%{?dist}
 Summary: Find the minimum version and the extensions required for a piece of PHP code to run
 
 License: BSD-3-clauses License
@@ -13,7 +13,9 @@ Source0: https://github.com/llaville/php-compatinfo/releases/download/%{version}
 BuildArch: noarch
 
 BuildRequires: php-cli
+BuildRequires: php-pdo
 Requires:  php-cli
+Requires:  php-pdo
 
 %description
 PHP CompatInfo is a library that can find the minimum version 
@@ -48,10 +50,10 @@ EOF
 
 %check
 # Only run functional test when PHP runtime is new enough
-if php -r 'exit(version_compare(PHP_VERSION, "8.0", "<") ? 1 : 0);'; then
+if php -r 'exit(version_compare(PHP_VERSION, "8.1", "<") ? 1 : 0);'; then
     %{buildroot}%{_bindir}/%{name} --version >/dev/null 2>&1
 else
-    echo "Skipping functional check: PHP < 8.0; binary integrity already verified by install step."
+    echo "Skipping functional check: PHP < 8.1; binary integrity already verified by install step."
 fi
 
 %files
@@ -60,6 +62,10 @@ fi
 %{phar_dir}/%{name}.phar
 
 %changelog
+* Sat Sep 19 2026 Danila Vershinin <info@getpagespeed.com> 7.2.6-2
+- require php-pdo: the bundled bartlett/php-compatinfo-db needs the pdo extension
+- raise the functional-check PHP floor to 8.1, matching upstream's "^8.1"
+
 * Thu Apr 23 2026 Danila Vershinin <info@getpagespeed.com> 7.2.6-1
 - release 7.2.6
 
