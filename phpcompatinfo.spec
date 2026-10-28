@@ -3,7 +3,7 @@
 
 Name: phpcompatinfo
 Version: 7.2.6
-Release: 2%{?dist}
+Release: 3%{?dist}
 Summary: Find the minimum version and the extensions required for a piece of PHP code to run
 
 License: BSD-3-clauses License
@@ -16,6 +16,9 @@ BuildRequires: php-cli
 BuildRequires: php-pdo
 Requires:  php-cli
 Requires:  php-pdo
+# EPEL ships the pre-rename upstream (5.x) as php-bartlett-PHP-CompatInfo with
+# the same /usr/bin/phpcompatinfo; hand it off instead of a file conflict.
+Obsoletes: php-bartlett-PHP-CompatInfo < 6
 
 %description
 PHP CompatInfo is a library that can find the minimum version 
@@ -62,6 +65,9 @@ fi
 %{phar_dir}/%{name}.phar
 
 %changelog
+* Thu Oct 29 2026 Danila Vershinin <info@getpagespeed.com> - 7.2.6-3
+- Obsolete EPEL's php-bartlett-PHP-CompatInfo (pre-rename upstream 5.x)
+
 * Sat Sep 19 2026 Danila Vershinin <info@getpagespeed.com> 7.2.6-2
 - require php-pdo: the bundled bartlett/php-compatinfo-db needs the pdo extension
 - raise the functional-check PHP floor to 8.1, matching upstream's "^8.1"
